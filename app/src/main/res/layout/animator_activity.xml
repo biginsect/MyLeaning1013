@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/animator_Btn"
+        android:text="start Animator"
+        android:textSize="25sp"
+        android:textColor="#EE9A00"
+        android:background="#4876FF"
+        android:textAllCaps="false"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+
+    <TextView
+        android:id="@+id/ani_tv"
+        android:text="Animator Called"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textColor="#431156"
+        android:layout_marginTop="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
