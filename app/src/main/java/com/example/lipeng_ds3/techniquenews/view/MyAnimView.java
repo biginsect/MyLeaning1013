@@ -75,6 +75,7 @@ public class MyAnimView extends View {
         animSet.start();
     }
 
+    /****************如果写了属性的get，set方法，ObjectAnimator就能识别这个属性**********************/
     public String getColor() {
         return color;
     }
