@@ -1,5 +1,7 @@
 package com.example.lipeng_ds3.techniquenews.view;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -8,6 +10,7 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.example.lipeng_ds3.techniquenews.animator.ColorEvaluator;
 import com.example.lipeng_ds3.techniquenews.animator.Pointer;
 import com.example.lipeng_ds3.techniquenews.animator.PointerEvaluator;
 
@@ -19,6 +22,9 @@ public class MyAnimView extends View {
     public static final float RADIUS = 30f;
     private Pointer currentPointer;
     private Paint mPaint;
+
+    //颜色设置 #RRGGBB格式
+    private String color;
 
     public MyAnimView(Context context, AttributeSet att){
         super(context, att);
@@ -51,6 +57,8 @@ public class MyAnimView extends View {
         //view的右下角
         Pointer endPointer = new Pointer(getWidth() - RADIUS, getHeight() - RADIUS);
         ValueAnimator animator = ValueAnimator.ofObject(new PointerEvaluator(), startPointer, endPointer);
+        //监听动画的过程，当Pointer发生变化的时候回调onAnimationUpdate，对currentPointer重新赋值
+        //调用invalidate()---->onDraw()，currentPointer的坐标发生改变，因此绘制的位置也改变--->因此实现动画的平移效果
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -58,8 +66,24 @@ public class MyAnimView extends View {
                 invalidate();
             }
         });
+        ObjectAnimator transferAnim = ObjectAnimator.ofObject(this, "color", new ColorEvaluator(),
+                "#0000FF", "#FF0000");
+        AnimatorSet animSet = new AnimatorSet();
+        animSet.play(animator).with(transferAnim);
         //动画时间3s
         animator.setDuration(3000);
-        animator.start();
+        animSet.start();
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+        //将字符串color转换成Color类型，并赋值给画笔mPaint
+        mPaint.setColor(Color.parseColor(color));
+        //重新调用onDraw，刷新试图
+        invalidate();
     }
 }
