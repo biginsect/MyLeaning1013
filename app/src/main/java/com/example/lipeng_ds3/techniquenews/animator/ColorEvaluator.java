@@ -18,12 +18,11 @@ public class ColorEvaluator implements TypeEvaluator { //用于颜色过渡
         String endColor = (String)endValue;
 
         int startRed = Integer.parseInt(startColor.substring(1, 3), 16);
-        int endRed = Integer.parseInt(endColor.substring(1, 3), 16);
-
         int startGreen = Integer.parseInt(startColor.substring(3, 5), 16);
-        int endGreen = Integer.parseInt(endColor.substring(3, 5), 16);
-
         int startBlue = Integer.parseInt(startColor.substring(5, 7), 16);
+
+        int endRed = Integer.parseInt(endColor.substring(1, 3), 16);
+        int endGreen = Integer.parseInt(endColor.substring(3, 5), 16);
         int endBlue = Integer.parseInt(endColor.substring(5, 7), 16);
 
         //初始化颜色的值
@@ -43,7 +42,7 @@ public class ColorEvaluator implements TypeEvaluator { //用于颜色过渡
         if (mCurrentRed != endRed){
             mCurrentRed = getCurrentColor(startRed, endRed, colorDiff, 0, fraction);
         }else if (mCurrentGreen != endGreen){
-            mCurrentGreen = getCurrentColor(startGreen, endGreen, colorDiff, 0, fraction);
+            mCurrentGreen = getCurrentColor(startGreen, endGreen, colorDiff, redDiff, fraction);
         }else if (mCurrentBlue != endBlue){
             mCurrentBlue = getCurrentColor(startBlue, endBlue, colorDiff, redDiff + greenDiff, fraction);
         }
@@ -68,8 +67,8 @@ public class ColorEvaluator implements TypeEvaluator { //用于颜色过渡
             }
         }else {
             currentColor = (int)(startColor + (fraction * colorDiff - offset));
-            if (currentColor > startColor){
-                currentColor = startColor;
+            if (currentColor > endColor){
+                currentColor = endColor;
             }
         }
 

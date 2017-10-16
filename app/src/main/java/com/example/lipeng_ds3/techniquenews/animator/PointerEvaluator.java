@@ -12,6 +12,7 @@ public class PointerEvaluator implements TypeEvaluator {
     public Object evaluate(float fraction, Object startValue, Object endValue) {
         Pointer startPointer = (Pointer)startValue;
         Pointer endPointer = (Pointer)endValue;
+        //fraction 是动画的完成度
         //根据fraction计算当前动画的x 和y 的值，
         float x = startPointer.getX() + fraction * (endPointer.getX() - startPointer.getX());
         float y = startPointer.getY() + fraction * (endPointer.getY() - startPointer.getY());

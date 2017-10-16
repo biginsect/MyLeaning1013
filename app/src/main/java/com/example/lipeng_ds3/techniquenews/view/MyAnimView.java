@@ -19,17 +19,29 @@ import com.example.lipeng_ds3.techniquenews.animator.PointerEvaluator;
  */
 
 public class MyAnimView extends View {
-    public static final float RADIUS = 30f;
+    public static final float RADIUS = 50f;
     private Pointer currentPointer;
     private Paint mPaint;
 
     //颜色设置 #RRGGBB格式
     private String color;
+    /****************如果写了属性的get，set方法，ObjectAnimator就能识别这个属性**********************/
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+        //将字符串color转换成Color类型，并赋值给画笔mPaint
+        mPaint.setColor(Color.parseColor(color));
+        //重新调用onDraw，刷新试图
+        invalidate();
+    }
 
     public MyAnimView(Context context, AttributeSet att){
         super(context, att);
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setColor(Color.GREEN);
+        mPaint.setColor(Color.BLUE);
     }
 
     @Override
@@ -66,25 +78,13 @@ public class MyAnimView extends View {
                 invalidate();
             }
         });
-        ObjectAnimator transferAnim = ObjectAnimator.ofObject(this, "color", new ColorEvaluator(),
-                "#0000FF", "#FF0000");
+        ObjectAnimator transferAnim = ObjectAnimator.ofObject(this, "color", new ColorEvaluator(), "#0000FF", "#FF0000");
         AnimatorSet animSet = new AnimatorSet();
         animSet.play(animator).with(transferAnim);
-        //动画时间3s
-        animator.setDuration(3000);
+        //组合动画时间
+        animSet.setDuration(5000);
         animSet.start();
     }
 
-    /****************如果写了属性的get，set方法，ObjectAnimator就能识别这个属性**********************/
-    public String getColor() {
-        return color;
-    }
 
-    public void setColor(String color) {
-        this.color = color;
-        //将字符串color转换成Color类型，并赋值给画笔mPaint
-        mPaint.setColor(Color.parseColor(color));
-        //重新调用onDraw，刷新试图
-        invalidate();
-    }
 }
