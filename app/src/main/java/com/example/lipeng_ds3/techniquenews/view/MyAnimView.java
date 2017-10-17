@@ -9,8 +9,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.LinearInterpolator;
 
 import com.example.lipeng_ds3.techniquenews.animator.ColorEvaluator;
+import com.example.lipeng_ds3.techniquenews.animator.DecelerateAccelerateInterpolator;
 import com.example.lipeng_ds3.techniquenews.animator.Pointer;
 import com.example.lipeng_ds3.techniquenews.animator.PointerEvaluator;
 
@@ -65,9 +70,9 @@ public class MyAnimView extends View {
 
     private void startAnimation(){
         //view的左上角
-        Pointer startPointer = new Pointer(RADIUS, RADIUS);
+        Pointer startPointer = new Pointer(getWidth() / 2, RADIUS);
         //view的右下角
-        Pointer endPointer = new Pointer(getWidth() - RADIUS, getHeight() - RADIUS);
+        Pointer endPointer = new Pointer(getWidth() / 2, getHeight() - RADIUS);
         ValueAnimator animator = ValueAnimator.ofObject(new PointerEvaluator(), startPointer, endPointer);
         //监听动画的过程，当Pointer发生变化的时候回调onAnimationUpdate，对currentPointer重新赋值
         //调用invalidate()---->onDraw()，currentPointer的坐标发生改变，因此绘制的位置也改变--->因此实现动画的平移效果
@@ -78,11 +83,12 @@ public class MyAnimView extends View {
                 invalidate();
             }
         });
+        animator.setInterpolator(new DecelerateAccelerateInterpolator());
         ObjectAnimator transferAnim = ObjectAnimator.ofObject(this, "color", new ColorEvaluator(), "#0000FF", "#FF0000");
         AnimatorSet animSet = new AnimatorSet();
         animSet.play(animator).with(transferAnim);
         //组合动画时间
-        animSet.setDuration(5000);
+        animSet.setDuration(3000);
         animSet.start();
     }
 
