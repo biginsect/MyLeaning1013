@@ -76,6 +76,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (v.getId()){
             case R.id.menu_btn:
+                Intent i = new Intent(HomeActivity.this, HttpActivity.class);
+                startActivity(i);
                 Log.d(TAG, "MenuBtn");
                 break;
             case R.id.picture_btn:

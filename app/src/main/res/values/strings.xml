@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">TechniqueNews</string>
     <string name="title_name">席卷吧</string>
+    <string name="http_hint">This is the content of response of network request</string>
 </resources>
